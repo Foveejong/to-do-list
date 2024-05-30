@@ -4,7 +4,7 @@ export class Task {
         this.taskcategory = taskcategory;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
-        this.priority = priority;
+        this.priority = this.getPriority(priority);
         this.index = index;
         this.complete = complete;
     }
@@ -14,17 +14,20 @@ export class Task {
         this.taskcategory = taskcategory;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
-        this.priority = priority;
+        this.priority = this.getPriority(priority);
+    }
+
+    getPriority(priority) {
+        if (priority === "high") {
+            return "!!!"
+        } else if (priority === "middle") {
+            return "!!"
+        } else {
+            return "!"
+        }
     }
 
     toggleComplete(bool) {
         return (bool) ? false : true;
-    }
-
-    changePriority(){
-        // depends on what button user clicked
-        // this.priority = "high";
-        // this.priority = "middle";
-        // this.priority = "low";
     }
 }

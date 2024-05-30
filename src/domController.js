@@ -9,7 +9,6 @@ function domController() {
 
     createTaskDom(list.list[0])
 
-
     displayTasks()
 
     // editTaskDom()
@@ -21,7 +20,8 @@ function domController() {
 }
 
 const displayTasks = () => {
-    console.log(list)
+    // display logic
+    
 }
 
 function createTaskDom(task) {
@@ -29,7 +29,7 @@ function createTaskDom(task) {
     projectCards.innerHTML += 
     `
     <div class="tasks">
-        <div class="priority middle-priority">!!</div>
+        <div class="priority middle-priority">${task.priority}</div>
         <div class="task">
             <input type="checkbox" id="task2">
             <div class="task-content">
@@ -47,4 +47,3 @@ function createTaskDom(task) {
 }
 
 export { domController }
-
