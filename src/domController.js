@@ -15,7 +15,7 @@ function domController() {
 
     // addTaskDom()
 
-    // deleteTaskDom()
+    deleteTaskDom(toDoList.list)
 
 }
 
@@ -23,7 +23,20 @@ const displayTasks = (list) => {
     list.forEach((task, index) => {
         createTaskDom(task, index);
     });
-    
+}
+
+function deleteTaskDom(list) {
+    const deletebuttons = Array.from(document.querySelectorAll(".delete"));
+    deletebuttons.forEach(button => {
+        button.addEventListener("click", e => {
+            // update todolist arr
+            const index = e.target.closest(".tasks").getAttribute("data");
+            list.splice(index, 1)
+
+            // delete element
+            e.target.closest(".tasks").remove();
+        })
+    })
 }
 
 function createTaskDom(task, index) {
@@ -51,7 +64,7 @@ function createTaskDom(task, index) {
     taskContent.classList.add("task-content")
     details.classList.add("details")
 
-    priority.textContent = task.priority;
+    priority.textContent = task.convertPriority(task.priority);
     taskName.textContent = task.taskname;
     dueDate.textContent = "Due: " + task.dueDate;
     taskCategory.textContent = task.taskcategory;

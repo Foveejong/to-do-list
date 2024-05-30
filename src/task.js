@@ -4,7 +4,7 @@ export class Task {
         this.taskcategory = taskcategory;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
-        this.priority = this.getPriority(priority);
+        this.priority = priority;
         this.index = index;
         this.complete = complete;
     }
@@ -17,7 +17,7 @@ export class Task {
         this.priority = this.getPriority(priority);
     }
 
-    getPriority(priority) {
+    convertPriority(priority) {
         if (priority === "high") {
             return "!!!"
         } else if (priority === "middle") {
