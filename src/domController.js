@@ -11,18 +11,33 @@ function domController() {
 
     displayTasks(toDoList.list)
 
+    displayModal()
+
     // editTaskDom()
 
-    // addTaskDom()
+    addTaskDom()
 
     deleteTaskDom(toDoList.list)
 
 }
 
-const displayTasks = (list) => {
+function displayTasks(list) {
     list.forEach((task, index) => {
         createTaskDom(task, index);
     });
+}
+
+function displayModal() {
+    const dialog = document.querySelector("dialog")
+    dialog.showModal();
+}
+
+function addTaskDom() {
+    // input details
+
+    // create task
+
+    // append task to list and dom
 }
 
 function deleteTaskDom(list) {
