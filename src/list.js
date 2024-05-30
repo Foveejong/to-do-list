@@ -6,8 +6,7 @@ class List {
         this.list = [];
     }
     
-    addTask = () => {
-        const task = createTask(this.list.length);
+    addTask = (task) => {
         this.list.push(task);
         console.log(this.list);
     }

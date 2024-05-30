@@ -131,7 +131,7 @@ input[type="checkbox"] {
 .task-content {
     display: flex;
     flex-direction: column;
-    min-width: 60ch;
+    min-width: 55ch;
 }
 
 .dialog {
