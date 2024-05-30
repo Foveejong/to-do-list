@@ -2,4 +2,238 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    /* border: 1px red solid; */
+}
+
+:root {
+    --sidebar-item-inner-padding: 8px 5px;
+    --svg-words-gap: 0.5rem;
+}
+
+.container {
+    display: flex;
+}
+
+.profilebar {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.profile-container {
+    display: flex;
+    align-items: center;
+    gap: var(--svg-words-gap);
+}
+
+.profilepic {
+    max-height: 2rem;
+    width: 1rem;
+}
+
+.add-task {
+    min-width: 2rem;
+    border-radius: 10px;
+    padding: 8px 10px;
+    text-align: center;
+    border-style: none;
+    color: orangered;
+}
+
+.add-task:hover {
+    background-color: rgb(255, 255, 214);
+    cursor: pointer;
+    color: orangered;
+}
+
+.sidebar-container {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-width: 250px;
+    min-height: 100vh;
+    background-color: rgb(239, 239, 239);
+    padding: 1rem;
+}
+
+.sidebar-item {
+    padding: var(--sidebar-item-inner-padding);
+    display: flex;
+    align-items: center;
+    gap: var(--svg-words-gap);
+    border-radius: 10px;
+}
+
+button.sidebar-item {
+    width: 100%;
+    border-style: none;
+}
+
+.mainbar > .sidebar-item:hover, .categories > .sidebar-item:hover {
+    background-color: rgb(255, 255, 214);
+    cursor: pointer;
+}
+
+.svg, .list-marker {
+    width: 1rem;
+    max-height: 1.2rem; 
+    text-align: center;
+}
+
+.task > input.svg {
+    width: 1.5rem;
+    min-height: 1.5rem;
+}
+
+.subheader {
+    font-size: 1.2rem;
+}
+
+.content-container {
+    flex: 4;
+    padding: 5rem 7rem;
+}
+
+.projects .title {
+    margin-bottom: 2rem;
+}
+
+.projects .subtitle {
+    margin-bottom: 1rem;
+}
+
+.tasks {
+    border-top: rgb(205, 205, 205) solid 1px;
+    padding: 1.5rem 0;
+    display: grid;
+    grid-template-columns: 1fr 5fr 1fr;
+    align-items: center;
+}
+
+.tasks > :last-child {
+    text-align: end;
+}
+
+input[type="checkbox"] {
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: orangered;
+}
+
+.task {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+}
+
+.task-content {
+    display: flex;
+    flex-direction: column;
+    min-width: 60ch;
+}
+
+.dialog {
+    position: absolute;
+    top: 25%;
+    left: 35%;
+    min-height: 50vh;
+    width: clamp(200px, 33vw, 500px);
+    border-radius: 20px;
+    border: none;
+}
+
+.dialog-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 2rem;
+}
+
+.input-container{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+}   
+
+.input-container > label {
+    width: 6rem;
+}
+
+fieldset {
+    border: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+legend {
+    margin-bottom: 0.5rem;
+}
+
+fieldset > .input-container {
+    padding-left: 1rem;
+}
+
+input[type="text"], input[type="date"],input[type="time"] {
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+    border: solid black 1px;
+}
+
+input:focus {
+    border-color: orangered;
+    outline: none;
+}
+
+input[type="radio"] {
+    accent-color: orangered;
+}
+
+button[type="submit"] {
+    align-self: center;
+    min-width: 10rem;
+    padding: 10px 20px;
+    border-radius: 15px;
+    border-style: none;
+}
+
+button[type="submit"]:hover {
+    background-color: rgb(195, 195, 195);
+    cursor: pointer;
+}
+
+.finished {
+    opacity: 0.5;
+    position: relative;
+}
+
+.finished:after {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    height: 1px;
+    background: rgb(85, 85, 85);
+    content: "";
+    width: 100%;
+    display: block;
+    pointer-events: none;
+  }
+
+.priority {
+    font-size: 1.5rem;
+}
+
+.high-priority {
+    color: rgb(255, 0, 0);
+}
+
+.middle-priority {
+    color: rgb(255, 149, 0);
+}
+
+.low-priority {
+    color: rgb(15, 175, 0);
 }
