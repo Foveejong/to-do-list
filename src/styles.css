@@ -226,14 +226,14 @@ button[type="submit"]:hover {
     font-size: 1.5rem;
 }
 
-.high-priority {
+.high {
     color: rgb(255, 0, 0);
 }
 
-.middle-priority {
+.middle {
     color: rgb(255, 149, 0);
 }
 
-.low-priority {
+.low {
     color: rgb(15, 175, 0);
 }
