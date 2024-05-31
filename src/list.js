@@ -17,8 +17,5 @@ class List {
     }
 }
 
-const createTask = (index) => {
-    return new Task("a", "a", "22-04-2024", 2359, "high", index, false)
-}
 
 export { List }

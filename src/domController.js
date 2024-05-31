@@ -7,15 +7,40 @@ function domController() {
     const toDoList = new List();
 
     initAddButton()
-    initDeleteButton()
 
+    // initial render
     displayTasks(toDoList.list)
     
+
     addTaskDom(toDoList)
     
     // editTaskDom()
-    deleteTaskDom(toDoList.list)
+}
 
+function addTaskDom(todolist) {
+    // create task
+    const form = document.querySelector("form");
+    form.addEventListener("submit", e => {
+        const task = createNewTask(
+            form.taskname.value, 
+            form.taskcategory.value, 
+            form.dueDate.value, 
+            form.dueTime.value, 
+            form.priority.value, 
+            todolist.list.length, 
+            false)
+        
+        //reset form 
+        form.reset()
+        
+        // append task to list
+        todolist.addTask(task);
+        
+        resetTaskDisplay();
+            
+        //reset page first then display all
+        displayTasks(todolist.list)
+    })
 }
 
 function displayTasks(list) {
@@ -29,49 +54,8 @@ function displayModal() {
     dialog.showModal();
 }
 
-function initAddButton() {
-    const btn = document.querySelector(".add-task");
-    btn.addEventListener("click", displayModal);
-}
-
-function initDeleteButton() {
-    const deletebuttons = Array.from(document.querySelectorAll(".delete"));
-    console.log(deletebuttons);
-    // deletebuttons.forEach(button => {
-    //     button.addEventListener("click", e => {
-    //         // update todolist arr
-    //         const index = e.target.closest(".tasks").getAttribute("data");
-    //         list.splice(index, 1)
-
-    //         // delete element
-    //         e.target.closest(".tasks").remove();
-    //     })
-    // })
-}
-
-function addTaskDom(todolist) {
-    // create task
-    const form = document.querySelector("form");
-    form.addEventListener("submit", e => {
-        const task = new Task(form.taskname.value, 
-            form.taskcategory.value, 
-            form.dueDate.value, 
-            form.dueTime.value, 
-            form.priority.value, 
-            todolist.list.length, 
-            false)
-
-        //reset form 
-        form.reset()
-
-        // append task to list
-        todolist.addTask(task);
-
-        resetTaskDisplay();
-
-        //reset page first then display all
-        displayTasks(todolist.list)
-    })
+function deleteTaskDom(list, index) {
+    list.splice(index, 1);
 }
 
 function resetTaskDisplay() {
@@ -80,20 +64,10 @@ function resetTaskDisplay() {
     projectCards.textContent = "";
 }
 
-function deleteTaskDom(list) {
-    const deletebuttons = Array.from(document.querySelectorAll(".delete"));
-    deletebuttons.forEach(button => {
-        button.addEventListener("click", e => {
-            // update todolist arr
-            const index = e.target.closest(".tasks").getAttribute("data");
-            list.splice(index, 1)
-
-            // delete element
-            e.target.closest(".tasks").remove();
-        })
-    })
+function createNewTask(name, category, date, time, priority, index, completed) {
+    return new Task(name, category, date, time, priority, index, completed)
 }
-
+ 
 function createTaskDom(task, index) {
     const projectCards = document.querySelector(".project-cards")
 
@@ -149,6 +123,25 @@ function createTaskDom(task, index) {
     tasks.appendChild(taskCategory);
 
     projectCards.appendChild(tasks);
+
+    // init delete buttons
+    initDeleteButton();
+}
+
+function initAddButton() {
+    const btn = document.querySelector(".add-task");
+    btn.addEventListener("click", displayModal);
+}
+
+function initDeleteButton(list, index) {
+    const deletebtn = document.querySelectorAll(".delete");
+    deletebtn.addEventListener("click", e => {
+        // delete element
+        e.target.closest(".tasks").remove();
+        
+        // update todolist arr
+        deleteTaskDom(list, index);
+    })
 }
 
 export { domController }
