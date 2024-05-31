@@ -9,6 +9,7 @@
 :root {
     --sidebar-item-inner-padding: 8px 5px;
     --svg-words-gap: 0.5rem;
+    --light-grey: rgb(246, 246, 246);
 }
 
 .container {
@@ -39,6 +40,7 @@
     text-align: center;
     border-style: none;
     color: orangered;
+    background-color: var(--light-grey);
 }
 
 .add-task:hover {
@@ -54,7 +56,7 @@
     gap: 2rem;
     min-width: 250px;
     min-height: 100vh;
-    background-color: rgb(239, 239, 239);
+    background-color: var(--light-grey);
     padding: 1rem;
 }
 
@@ -68,6 +70,7 @@
 
 button.sidebar-item {
     width: 100%;
+    background-color: var(--light-grey);
     border-style: none;
 }
 
@@ -138,17 +141,24 @@ input[type="checkbox"] {
     position: absolute;
     top: 25%;
     left: 35%;
-    min-height: 50vh;
+    min-height: 45vh;
     width: clamp(200px, 33vw, 500px);
     border-radius: 20px;
     border: none;
+    background-color: rgba(255, 255, 255, 0.9);
 }
 
 .dialog-container {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 1rem;
     padding: 2rem;
+}
+
+.dialog::backdrop {
+    background-color: grey;
+    filter: blur(100rem);
 }
 
 .input-container{
@@ -201,7 +211,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: rgb(195, 195, 195);
+    background-color: rgb(207, 207, 207);
     cursor: pointer;
 }
 

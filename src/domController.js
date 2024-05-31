@@ -143,6 +143,10 @@ function initDeleteButton(list, index, btn) {
         
         // update todolist arr
         deleteTaskDom(list, index);
+
+        resetTaskDisplay();
+
+        displayTasks(list);
     })
 }
 
