@@ -125,7 +125,7 @@ function createTaskDom(list, task, index) {
     projectCards.appendChild(tasks);
 
     // init delete buttons
-    initDeleteButton(list, index);
+    initDeleteButton(list, index, dustbinBtn);
 }
 
 function initAddButton() {
@@ -133,9 +133,8 @@ function initAddButton() {
     btn.addEventListener("click", displayModal);
 }
 
-function initDeleteButton(list, index) {
-    const deletebtn = document.querySelector(".delete");
-    deletebtn.addEventListener("click", e => {
+function initDeleteButton(list, index, btn) {
+    btn.addEventListener("click", e => {
         // delete element
         e.target.closest(".tasks").remove();
         
