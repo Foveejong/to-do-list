@@ -76,7 +76,11 @@ button.sidebar-item {
 
 .mainbar > .sidebar-item:hover, .categories > .sidebar-item:hover {
     background-color: rgb(255, 255, 214);
+    color: orangered;
     cursor: pointer;
+    .svg {
+        filter: invert(50%) sepia(150%) hue-rotate(-50deg) contrast(150%) saturate(6) brightness(90%);
+    }
 }
 
 .svg, .list-marker {
@@ -211,7 +215,7 @@ button[type="submit"] {
 }
 
 button[type="submit"]:hover {
-    background-color: rgb(207, 207, 207);
+    background-color: rgba(216, 216, 216, 0.86);
     cursor: pointer;
 }
 
