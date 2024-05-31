@@ -45,7 +45,7 @@ function addTaskDom(todolist) {
 
 function displayTasks(list) {
     list.forEach((task, index) => {
-        createTaskDom(task, index);
+        createTaskDom(list, task, index);
     });
 }
 
@@ -68,7 +68,7 @@ function createNewTask(name, category, date, time, priority, index, completed) {
     return new Task(name, category, date, time, priority, index, completed)
 }
  
-function createTaskDom(task, index) {
+function createTaskDom(list, task, index) {
     const projectCards = document.querySelector(".project-cards")
 
     const tasks = document.createElement("div");
@@ -125,7 +125,7 @@ function createTaskDom(task, index) {
     projectCards.appendChild(tasks);
 
     // init delete buttons
-    initDeleteButton();
+    initDeleteButton(list, index);
 }
 
 function initAddButton() {
@@ -134,7 +134,7 @@ function initAddButton() {
 }
 
 function initDeleteButton(list, index) {
-    const deletebtn = document.querySelectorAll(".delete");
+    const deletebtn = document.querySelector(".delete");
     deletebtn.addEventListener("click", e => {
         // delete element
         e.target.closest(".tasks").remove();
