@@ -5,42 +5,45 @@ import dustbin from "../svg/trash-can-outline.svg";
 
 function domController() {
     const toDoList = new List();
-
     initAddButton()
 
     // initial render
     displayTasks(toDoList.list)
     
-
-    addTaskDom(toDoList)
-    
     // editTaskDom()
+
+    initForm(toDoList)
+}
+
+function initForm(list) {
+    const form = document.querySelector("form");
+    form.addEventListener("submit", e => addTaskDom(list))
 }
 
 function addTaskDom(todolist) {
     // create task
     const form = document.querySelector("form");
-    form.addEventListener("submit", e => {
-        const task = createNewTask(
-            form.taskname.value, 
-            form.taskcategory.value, 
-            form.dueDate.value, 
-            form.dueTime.value, 
-            form.priority.value, 
-            todolist.list.length, 
-            false)
+    // form.addEventListener("submit", e => {
+    const task = createNewTask(
+        form.taskname.value, 
+        form.taskcategory.value, 
+        form.dueDate.value, 
+        form.dueTime.value, 
+        form.priority.value, 
+        todolist.list.length, 
+        false)
+    
+    //reset form 
+    form.reset()
+    
+    // append task to list
+    todolist.addTask(task);
+    
+    resetTaskDisplay();
         
-        //reset form 
-        form.reset()
-        
-        // append task to list
-        todolist.addTask(task);
-        
-        resetTaskDisplay();
-            
-        //reset page first then display all
-        displayTasks(todolist.list)
-    })
+    //reset page first then display all
+    displayTasks(todolist.list)
+    // })
 }
 
 function displayTasks(list) {
