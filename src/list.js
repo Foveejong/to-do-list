@@ -8,12 +8,10 @@ class List {
     
     addTask = (task) => {
         this.list.push(task);
-        console.log(this.list);
     }
 
     deleteTask = (index) => {
         this.list.splice(index, 1);
-        console.log(this.list);
     }
 }
 

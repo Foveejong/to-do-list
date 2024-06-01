@@ -1,5 +1,6 @@
 import { List } from "./List";
-import { Task } from "./task";
+// import { Task } from "./task";
+import { createNewTask } from "./logic";
 import pencil from "../svg/pencil.svg";
 import dustbin from "../svg/trash-can-outline.svg";
 
@@ -8,19 +9,19 @@ function domController() {
     initAddButton()
 
     // initial render
-    displayTasks(toDoList.list)
+    displayTasks(toDoList)
     
     // editTaskDom()
 
     initForm(toDoList)
 }
 
-function initForm(list) {
+function initForm(toDoList) {
     const form = document.querySelector("form");
-    form.addEventListener("submit", e => addTaskDom(list))
+    form.addEventListener("submit", e => addTaskDom(toDoList))
 }
 
-function addTaskDom(todolist) {
+function addTaskDom(toDoList) {
     // create task
     const form = document.querySelector("form");
     // form.addEventListener("submit", e => {
@@ -30,25 +31,25 @@ function addTaskDom(todolist) {
         form.dueDate.value, 
         form.dueTime.value, 
         form.priority.value, 
-        todolist.list.length, 
+        toDoList.list.length, 
         false)
     
     //reset form 
     form.reset()
     
     // append task to list
-    todolist.addTask(task);
+    toDoList.addTask(task);
     
     resetTaskDisplay();
         
     //reset page first then display all
-    displayTasks(todolist.list)
+    displayTasks(toDoList)
     // })
 }
 
-function displayTasks(list) {
-    list.forEach((task, index) => {
-        createTaskDom(list, task, index);
+function displayTasks(toDoList) {
+    toDoList.list.forEach((task, index) => {
+        createTaskDom(toDoList, task, index);
     });
 }
 
@@ -57,21 +58,13 @@ function displayModal() {
     dialog.showModal();
 }
 
-function deleteTaskDom(list, index) {
-    list.splice(index, 1);
-}
-
 function resetTaskDisplay() {
     const projectCards = document.querySelector(".project-cards");
 
     projectCards.textContent = "";
 }
-
-function createNewTask(name, category, date, time, priority, index, completed) {
-    return new Task(name, category, date, time, priority, index, completed)
-}
  
-function createTaskDom(list, task, index) {
+function createTaskDom(toDoList, task, index) {
     const projectCards = document.querySelector(".project-cards")
 
     const tasks = document.createElement("div");
@@ -128,7 +121,7 @@ function createTaskDom(list, task, index) {
     projectCards.appendChild(tasks);
 
     // init delete buttons
-    initDeleteButton(list, index, dustbinBtn);
+    initDeleteButton(toDoList, index, dustbinBtn);
 }
 
 function initAddButton() {
@@ -136,17 +129,17 @@ function initAddButton() {
     btn.addEventListener("click", displayModal);
 }
 
-function initDeleteButton(list, index, btn) {
+function initDeleteButton(toDoList, index, btn) {
     btn.addEventListener("click", e => {
         // delete element
         e.target.closest(".tasks").remove();
         
-        // update todolist arr
-        deleteTaskDom(list, index);
+        // update toDoList arr
+        toDoList.deleteTask(index);
 
         resetTaskDisplay();
 
-        displayTasks(list);
+        displayTasks(toDoList);
     })
 }
 
