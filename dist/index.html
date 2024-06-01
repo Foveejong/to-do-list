@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script defer src="runtime.js"></script><script defer src="main.js"></script></head>
+<body>
+    <div class="container">
+        <div class="sidebar-container">
+            <div class="profilebar sidebar-item">
+                <div class="profile-container">
+                    <h2>Welcome</h2>
+                </div>
+                <button class="add-task" type="button">Add Task +</button>
+            </div>
+            <div class="mainbar">
+                <button type="button" class="home sidebar-item">
+                    <img class="svg" src="../svg/format-list-text.svg" alt="">
+                    <p class="subheader">All Tasks</p>
+                </button type="button">
+                <button type="button" class="profile sidebar-item">
+                    <img class="svg" src="../svg/format-list-text.svg" alt="">
+                    <p class="subheader">Today</p>
+                </button type="button">
+                <button type="button" class="messages sidebar-item">
+                    <img class="svg" src="../svg/format-list-text.svg" alt="">
+                    <p class="subheader">Tomorrow</p>
+                </button type="button">
+            </div>
+            <div class="categories">
+                <button type="button" class="categories-item sidebar-item">
+                    <span class="list-marker">#</span>
+                    <p class="subheader">Fitness</p>
+                </button type="button">
+                <button type="button" class="sidebar-item">
+                    <span class="list-marker">#</span>
+                    <p class="subheader">Purchases</p>
+                </button type="button">
+                <button type="button" class="sidebar-item">
+                    <span class="list-marker">#</span>
+                    <p class="subheader">Appointments</p>
+                </button type="button">
+            </div>
+        </div>
+        <div class="content-container">
+            <div class="projects">
+                <h1 class="title">Tasks</h1>
+                <h2 class="subtitle">Today</h2>
+                <div class="project-cards">
+                    <!-- <div class="tasks finished">
+                        <div class="priority high">!!!</div>
+                        <div class="task">
+                            <input type="checkbox" id="task1">
+                            <div class="task-content">
+                                <p>hi</p>
+                                <div class="details">
+                                    <span>Due: 23/04/2024 2359</span>
+                                </div>
+                            </div>
+                            <input type="image" src="../svg/trash-can-outline.svg" name="delete" class="svg delete" id="delete" />
+                            <input type="image" src="../svg/pencil.svg" name="edit" class="svg edit" id="edit" />
+                        </div>
+                        <p>purchases #</p>
+                    </div>
+                    <div class="tasks">
+                        <div class="priority middle">!!</div>
+                        <div class="task">
+                            <input type="checkbox" id="task2">
+                            <div class="task-content">
+                                <p>Title</p>
+                                <div class="details">
+                                    <span>Due: Today 2359</span>
+                                </div>
+                            </div>
+                            <input type="image" src="../svg/trash-can-outline.svg" name="delete" class="svg delete" id="delete" />
+                            <input type="image" src="../svg/pencil.svg" name="edit" class="svg edit" id="edit" />
+                        </div>
+                        <p>appointments #</p>
+                    </div>
+                    <div class="tasks">
+                        <div class="priority low">!</div>
+                        <div class="task">
+                            <input type="checkbox" id="task3">
+                            <div class="task-content">
+                                <p>hi</p>
+                                <div class="details">
+                                    <span>Due: Today 2359</span>
+                                </div>
+                            </div>
+                            <input type="image" src="../svg/trash-can-outline.svg" name="delete" class="svg delete" id="delete" />
+                            <input type="image" src="../svg/pencil.svg" name="edit" class="svg edit" id="edit" />
+                        </div>
+                        <p>fitness #</p>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <dialog class="add-task-dialog dialog">
+        <form class="add-task-form" method="dialog">
+            <div class="dialog-container">
+                <div class="input-container">
+                    <label for="taskname">Task Name: </label>
+                    <input type="text" name="taskname" id="taskname" maxlength="25">
+                </div>
+                <div class="input-container">
+                    <label for="taskcategory">Category: </label>
+                    <input type="text" name="taskcategory" id="taskcategory" maxlength="25">
+                </div>
+                <div class="input-container">
+                    <label for="dueDate">Due Date: </label>
+                    <input type="date" name="dueDate" id="dueDate">
+                </div>
+                <div class="input-container">
+                    <label for="dueTime">Due Time: </label>
+                    <input type="time" name="dueTime" id="dueTime">
+                </div>
+                <fieldset>
+                    <legend> Priority: </legend>
+                        <div class="input-container">
+                            <label for="high">High(!!!): </label>
+                            <input type="radio" name="priority" id="high" value="high" checked>
+                        </div>
+                        <div class="input-container">
+                            <label for="middle">Middle(!!): </label>
+                            <input type="radio" name="priority" id="middle" value="middle">
+                        </div>
+                        <div class="input-container">
+                            <label for="low">Low(!): </label>
+                            <input type="radio" name="priority" id="low" value="low">
+                        </div>
+                    </fieldset>
+                <button type="submit">Add Task</button>
+            </div>
+        </form>
+    </dialog>
+    <dialog class="edit-task-dialog dialog">
+        <form class="edit-task-form" method="dialog">
+            <div class="dialog-container">
+                <div class="input-container">
+                    <label for="tasknameEdit">Task Name: </label>
+                    <input type="text" name="tasknameEdit" id="tasknameEdit" maxlength="25">
+                </div>
+                <div class="input-container">
+                    <label for="taskcategoryEdit">Category: </label>
+                    <input type="text" name="taskcategoryEdit" id="taskcategoryEdit" maxlength="25">
+                </div>
+                <div class="input-container">
+                    <label for="dueDateEdit">Due Date: </label>
+                    <input type="date" name="dueDateEdit" id="dueDateEdit">
+                </div>
+                <div class="input-container">
+                    <label for="dueTimeEdit">Due Time: </label>
+                    <input type="time" name="dueTimeEdit" id="dueTimeEdit">
+                </div>
+                <fieldset>
+                    <legend> Priority: </legend>
+                        <div class="input-container">
+                            <label for="highEdit">High(!!!): </label>
+                            <input type="radio" name="priorityEdit" id="highEdit" value="high" checked>
+                        </div>
+                        <div class="input-container">
+                            <label for="middleEdit">Middle(!!): </label>
+                            <input type="radio" name="priorityEdit" id="middleEdit" value="middle">
+                        </div>
+                        <div class="input-container">
+                            <label for="lowEdit">Low(!): </label>
+                            <input type="radio" name="priorityEdit" id="lowEdit" value="low">
+                        </div>
+                    </fieldset>
+                <button type="submit">Edit Task</button>
+            </div>
+        </form>
+    </dialog>
+</body>
+</html>
