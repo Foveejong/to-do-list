@@ -96,8 +96,8 @@
             </div>
         </div>
     </div>
-    <dialog class="dialog">
-        <form method="dialog">
+    <dialog class="add-task-dialog dialog">
+        <form class="add-task-form" method="dialog">
             <div class="dialog-container">
                 <div class="input-container">
                     <label for="taskname">Task Name: </label>
@@ -131,6 +131,44 @@
                         </div>
                     </fieldset>
                 <button type="submit">Add Task</button>
+            </div>
+        </form>
+    </dialog>
+    <dialog class="edit-task-dialog dialog">
+        <form class="edit-task-form" method="dialog">
+            <div class="dialog-container">
+                <div class="input-container">
+                    <label for="tasknameEdit">Task Name: </label>
+                    <input type="text" name="tasknameEdit" id="tasknameEdit" maxlength="25">
+                </div>
+                <div class="input-container">
+                    <label for="taskcategoryEdit">Category: </label>
+                    <input type="text" name="taskcategoryEdit" id="taskcategoryEdit" maxlength="25">
+                </div>
+                <div class="input-container">
+                    <label for="dueDateEdit">Due Date: </label>
+                    <input type="date" name="dueDateEdit" id="dueDateEdit">
+                </div>
+                <div class="input-container">
+                    <label for="dueTimeEdit">Due Time: </label>
+                    <input type="time" name="dueTimeEdit" id="dueTimeEdit">
+                </div>
+                <fieldset>
+                    <legend> Priority: </legend>
+                        <div class="input-container">
+                            <label for="highEdit">High(!!!): </label>
+                            <input type="radio" name="priorityEdit" id="highEdit" value="high" checked>
+                        </div>
+                        <div class="input-container">
+                            <label for="middleEdit">Middle(!!): </label>
+                            <input type="radio" name="priorityEdit" id="middleEdit" value="middle">
+                        </div>
+                        <div class="input-container">
+                            <label for="lowEdit">Low(!): </label>
+                            <input type="radio" name="priorityEdit" id="lowEdit" value="low">
+                        </div>
+                    </fieldset>
+                <button type="submit">Edit Task</button>
             </div>
         </form>
     </dialog>

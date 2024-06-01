@@ -1,5 +1,5 @@
 import { List } from "./List";
-// import { Task } from "./task";
+import { Task } from "./Task";
 import { createNewTask } from "./logic";
 import pencil from "../svg/pencil.svg";
 import dustbin from "../svg/trash-can-outline.svg";
@@ -10,21 +10,33 @@ function domController() {
 
     // initial render
     displayTasks(toDoList)
-    
-    // editTaskDom()
 
-    initForm(toDoList)
+    initAddTaskForm(toDoList)
 }
 
-function initForm(toDoList) {
-    const form = document.querySelector("form");
+function initAddTaskForm(toDoList) {
+    const form = document.querySelector(".add-task-form");
     form.addEventListener("submit", e => addTaskDom(toDoList))
+}
+
+function initEditTaskForm(toDoList, task) {
+    const form = document.querySelector(".edit-task-form");
+    form.addEventListener("submit", e => {
+        task.editTask(form.tasknameEdit.value, 
+            form.taskcategoryEdit.value, 
+            form.dueDateEdit.value, 
+            form.dueTimeEdit.value, 
+            form.priorityEdit.value);
+            
+        form.reset();
+        resetTaskDisplay();
+        displayTasks(toDoList);
+    })
 }
 
 function addTaskDom(toDoList) {
     // create task
-    const form = document.querySelector("form");
-    // form.addEventListener("submit", e => {
+    const form = document.querySelector(".add-task-form");
     const task = createNewTask(
         form.taskname.value, 
         form.taskcategory.value, 
@@ -36,7 +48,7 @@ function addTaskDom(toDoList) {
     
     //reset form 
     form.reset()
-    
+
     // append task to list
     toDoList.addTask(task);
     
@@ -44,7 +56,6 @@ function addTaskDom(toDoList) {
         
     //reset page first then display all
     displayTasks(toDoList)
-    // })
 }
 
 function displayTasks(toDoList) {
@@ -53,8 +64,13 @@ function displayTasks(toDoList) {
     });
 }
 
-function displayModal() {
-    const dialog = document.querySelector("dialog");
+function displayAddTaskModal() {
+    const dialog = document.querySelector(".add-task-dialog");
+    dialog.showModal();
+}
+
+function displayEditTaskModal() {
+    const dialog = document.querySelector(".edit-task-dialog");
     dialog.showModal();
 }
 
@@ -122,11 +138,12 @@ function createTaskDom(toDoList, task, index) {
 
     // init delete buttons
     initDeleteButton(toDoList, index, dustbinBtn);
+    initEditButton(toDoList, index, pencilBtn);
 }
 
 function initAddButton() {
     const btn = document.querySelector(".add-task");
-    btn.addEventListener("click", displayModal);
+    btn.addEventListener("click", displayAddTaskModal);
 }
 
 function initDeleteButton(toDoList, index, btn) {
@@ -140,6 +157,17 @@ function initDeleteButton(toDoList, index, btn) {
         resetTaskDisplay();
 
         displayTasks(toDoList);
+        console.log(toDoList.list)
+    })
+}
+
+function initEditButton(toDoList, index, btn) {
+    const task = toDoList.findTask(index);
+    console.log(task)
+    btn.addEventListener("click", e => {        
+        // show modal to input details 
+        displayEditTaskModal();
+        initEditTaskForm(toDoList, task)
     })
 }
 

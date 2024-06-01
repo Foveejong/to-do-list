@@ -14,7 +14,7 @@ export class Task {
         this.taskcategory = taskcategory;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
-        this.priority = this.getPriority(priority);
+        this.priority = priority;
     }
 
     convertPriority(priority) {
