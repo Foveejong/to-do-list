@@ -115,7 +115,7 @@ button.sidebar-item {
     border-top: rgb(205, 205, 205) solid 1px;
     padding: 1.5rem 0;
     display: grid;
-    grid-template-columns: 1fr 5fr 1fr;
+    grid-template-columns: 1fr 6fr 3fr;
     align-items: center;
 }
 

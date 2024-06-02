@@ -63,6 +63,8 @@ function addTaskDom(toDoList) {
 }
 
 function displayTasks(toDoList) {
+    // sort list first then display list
+    toDoList.arrangePriority()
     toDoList.list.forEach((task) => {
         createTaskDom(toDoList, task);
     });
@@ -111,7 +113,7 @@ function createTaskDom(toDoList, task) {
     priority.textContent = task.convertPriority(task.priority);
     taskName.textContent = task.taskname;
     dueDate.textContent = "Due: " + task.dueDate + " " + task.dueTime;
-    taskCategory.textContent = task.taskcategory + " #";
+    taskCategory.textContent = `${task.taskcategory} #`;
     
     dustbinBtn.src = dustbin;
     dustbinBtn.name = "delete";

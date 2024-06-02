@@ -19,6 +19,13 @@ class List {
         const taskArr = this.list.filter((task) => +task.index === +index);
         return taskArr[0]
     }
+
+    arrangePriority = () => {
+        this.list.sort((a, b) => {
+            return b.convertPriority(b.priority).length - a.convertPriority(a.priority).length
+        })
+        console.log(this.list)
+    }
 }
 
 export { List }
