@@ -12,12 +12,11 @@ class List {
     }
 
     deleteTask = (index) => {
-        this.list.splice(index, 1);
-        console.log(this.list);
+        this.list = this.list.filter(task => task.index !== index)
     }
 
     findTask = (index) => {
-        const taskArr = this.list.filter((task) => task.index === index);
+        const taskArr = this.list.filter((task) => +task.index === +index);
         return taskArr[0]
     }
 }

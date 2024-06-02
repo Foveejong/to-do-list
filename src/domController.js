@@ -12,6 +12,8 @@ function domController() {
     displayTasks(toDoList)
 
     initAddTaskForm(toDoList)
+
+    initEditTaskForm(toDoList)
 }
 
 function initAddTaskForm(toDoList) {
@@ -19,9 +21,11 @@ function initAddTaskForm(toDoList) {
     form.addEventListener("submit", e => addTaskDom(toDoList))
 }
 
-function initEditTaskForm(toDoList, task) {
+function initEditTaskForm(toDoList) {
     const form = document.querySelector(".edit-task-form");
     form.addEventListener("submit", e => {
+        // get data attr of form, which reflects item being changed
+        const task = toDoList.findTask(form.getAttribute("data"));
         task.editTask(form.tasknameEdit.value, 
             form.taskcategoryEdit.value, 
             form.dueDateEdit.value, 
@@ -59,8 +63,8 @@ function addTaskDom(toDoList) {
 }
 
 function displayTasks(toDoList) {
-    toDoList.list.forEach((task, index) => {
-        createTaskDom(toDoList, task, index);
+    toDoList.list.forEach((task) => {
+        createTaskDom(toDoList, task);
     });
 }
 
@@ -76,11 +80,10 @@ function displayEditTaskModal() {
 
 function resetTaskDisplay() {
     const projectCards = document.querySelector(".project-cards");
-
     projectCards.textContent = "";
 }
  
-function createTaskDom(toDoList, task, index) {
+function createTaskDom(toDoList, task) {
     const projectCards = document.querySelector(".project-cards")
 
     const tasks = document.createElement("div");
@@ -96,7 +99,7 @@ function createTaskDom(toDoList, task, index) {
     const taskCategory = document.createElement("p");
 
     tasks.classList.add("tasks");
-    tasks.setAttribute("data", index);
+    tasks.setAttribute("data", task.index);
     priority.classList.add("priority", `${task.priority}`);
     taskbox.classList.add("task");
     checkbox.setAttribute("type", "checkbox");
@@ -107,7 +110,7 @@ function createTaskDom(toDoList, task, index) {
 
     priority.textContent = task.convertPriority(task.priority);
     taskName.textContent = task.taskname;
-    dueDate.textContent = "Due: " + task.dueDate;
+    dueDate.textContent = "Due: " + task.dueDate + " " + task.dueTime;
     taskCategory.textContent = task.taskcategory + " #";
     
     dustbinBtn.src = dustbin;
@@ -137,8 +140,8 @@ function createTaskDom(toDoList, task, index) {
     projectCards.appendChild(tasks);
 
     // init delete buttons
-    initDeleteButton(toDoList, index, dustbinBtn);
-    initEditButton(toDoList, index, pencilBtn);
+    initDeleteButton(toDoList, task.index, dustbinBtn);
+    initEditButton(task.index, pencilBtn);
 }
 
 function initAddButton() {
@@ -157,17 +160,16 @@ function initDeleteButton(toDoList, index, btn) {
         resetTaskDisplay();
 
         displayTasks(toDoList);
-        console.log(toDoList.list)
     })
 }
 
-function initEditButton(toDoList, index, btn) {
-    const task = toDoList.findTask(index);
-    console.log(task)
-    btn.addEventListener("click", e => {        
+function initEditButton(index, btn) {
+    const form = document.querySelector(".edit-task-form");
+    btn.addEventListener("click", e => {
+        // change data attr of form to reflect task being changed
+        form.setAttribute("data", index);
         // show modal to input details 
         displayEditTaskModal();
-        initEditTaskForm(toDoList, task)
     })
 }
 
