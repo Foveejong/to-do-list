@@ -76,7 +76,7 @@
                             <input type="image" src="../svg/pencil.svg" name="edit" class="svg edit" id="edit" />
                         </div>
                         <p>appointments #</p>
-                    </div>
+                    </div> -->
                     <div class="tasks">
                         <div class="priority low">!</div>
                         <div class="task">
@@ -85,13 +85,15 @@
                                 <p>hi</p>
                                 <div class="details">
                                     <span>Due: Today 2359</span>
+                                    <div class="caret"></div>
+                                    <div class="description-space"></div>
                                 </div>
                             </div>
                             <input type="image" src="../svg/trash-can-outline.svg" name="delete" class="svg delete" id="delete" />
                             <input type="image" src="../svg/pencil.svg" name="edit" class="svg edit" id="edit" />
                         </div>
                         <p>fitness #</p>
-                    </div> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -106,6 +108,10 @@
                 <div class="input-container">
                     <label for="taskcategory">Category: </label>
                     <input type="text" name="taskcategory" id="taskcategory" maxlength="20">
+                </div>
+                <div class="input-container">
+                    <label for="description">Description: </label>
+                    <textarea name="description" id="description" cols="20" rows="5"></textarea>
                 </div>
                 <div class="input-container">
                     <label for="dueDate">Due Date: </label>
@@ -143,7 +149,11 @@
                 </div>
                 <div class="input-container">
                     <label for="taskcategoryEdit">Category: </label>
-                    <input type="text" name="taskcategoryEdit" id="taskcategoryEdit" maxlength="25">
+                    <input type="text" name="taskcategoryEdit" id="taskcategoryEdit" maxlength="20">
+                </div>
+                <div class="input-container">
+                    <label for="descriptionEdit">Description: </label>
+                    <textarea name="descriptionEdit" id="descriptionEdit" cols="20" rows="5"></textarea>
                 </div>
                 <div class="input-container">
                     <label for="dueDateEdit">Due Date: </label>
