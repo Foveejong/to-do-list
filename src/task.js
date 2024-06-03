@@ -29,7 +29,10 @@ export class Task {
         }
     }
 
-    toggleComplete() {
-        return this.complete ? false : true;
+    completeTask(btn) {
+        this.complete = true;
+
+        // disable the checkbox
+        btn.disabled = true;
     }
 }

@@ -124,6 +124,7 @@ button.sidebar-item {
 }
 
 input[type="checkbox"] {
+    cursor: pointer;
     width: 1.2rem;
     height: 1.2rem;
     accent-color: orangered;
@@ -154,7 +155,7 @@ input[type="checkbox"] {
     cursor: pointer;
     content: '';
     position: absolute;
-    top: -20px;
+    top: -15px;
     left: 96%;
     border-top: 7px solid #0a0707;
     border-left: 7px solid transparent;
@@ -166,7 +167,7 @@ input[type="checkbox"] {
     content: '';
     position: absolute;
     left: calc(96% + 1px);
-    top: -20px;
+    top: -15px;
     border-top: 6px solid #fff;
     border-left: 6px solid transparent;
     border-right: 6px solid transparent;

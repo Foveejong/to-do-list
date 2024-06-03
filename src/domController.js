@@ -1,5 +1,4 @@
 import { List } from "./List";
-import { Task } from "./Task";
 import { createNewTask } from "./logic";
 import pencil from "../svg/pencil.svg";
 import dustbin from "../svg/trash-can-outline.svg";
@@ -35,6 +34,8 @@ function initEditTaskForm(toDoList) {
             
         form.reset();
         resetTaskDisplay();
+
+
         displayTasks(toDoList);
     })
 }
@@ -66,7 +67,11 @@ function addTaskDom(toDoList) {
 
 function displayTasks(toDoList) {
     // sort list first then display list
-    toDoList.arrangePriority()
+
+    toDoList.shiftFinished();
+    const active = toDoList.activeTasks();
+    toDoList.arrangeActiveTasks(active);
+
     toDoList.list.forEach((task) => {
         createTaskDom(toDoList, task);
     });
@@ -121,6 +126,14 @@ function createTaskDom(toDoList, task) {
     descriptionSpace.textContent = "Description: " + task.description;
     dueDate.textContent = "Due: " + task.dueDate + " " + task.dueTime;
     taskCategory.textContent = `${task.taskcategory} #`;
+
+    // check completed
+    if (task.complete) {
+        tasks.classList.add("finished");
+        checkbox.checked = true;
+        checkbox.disabled = true;
+        pencilBtn.disabled = true;
+    }
     
     dustbinBtn.src = dustbin;
     dustbinBtn.name = "delete";
@@ -150,13 +163,10 @@ function createTaskDom(toDoList, task) {
 
     projectCards.appendChild(tasks);
 
-    caret.addEventListener("click", e => {
-        descriptionSpace.style.display = (descriptionSpace.style.display === "block") ? "none" : "block";
-    })
-
-    // init delete buttons
+    // init buttons
     initDeleteButton(toDoList, task.index, dustbinBtn);
     initEditButton(task.index, pencilBtn);
+    initCaret(caret, descriptionSpace);
     initCheckBox(toDoList, task.index, checkbox);
 }
 
@@ -173,6 +183,7 @@ function initDeleteButton(toDoList, index, btn) {
         // update toDoList arr
         toDoList.deleteTask(index);
 
+        console.log(1);
         resetTaskDisplay();
 
         displayTasks(toDoList);
@@ -189,15 +200,25 @@ function initEditButton(index, btn) {
     })
 }
 
+function initCaret(caret, description) {
+    caret.addEventListener("click", e => {
+        description.style.display = (description.style.display === "block") ? "none" : "block";
+    })
+}
+
 function initCheckBox(toDoList, index, btn) {
     btn.addEventListener("click", e => {
         // DOM strike through
         const closestTaskElement = e.target.closest(".tasks");
-        closestTaskElement.classList.toggle("finished");
+        closestTaskElement.classList.add("finished");
 
         // find task and update complete
         const task = toDoList.findTask(index);
-        task.toggleComplete();
+        task.completeTask(btn);
+
+        resetTaskDisplay();
+
+        displayTasks(toDoList);
     })
 }
 
