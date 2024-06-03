@@ -24,7 +24,6 @@ class List {
         this.list.sort((a, b) => {
             return b.convertPriority(b.priority).length - a.convertPriority(a.priority).length
         })
-        console.log(this.list)
     }
 }
 

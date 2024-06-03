@@ -1,7 +1,8 @@
 export class Task {
-    constructor(taskname, taskcategory, dueDate, dueTime, priority, index, complete) {
+    constructor(taskname, taskcategory, description, dueDate, dueTime, priority, index, complete) {
         this.taskname = taskname;
         this.taskcategory = taskcategory;
+        this.description = description;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
         this.priority = priority;
@@ -9,9 +10,10 @@ export class Task {
         this.complete = complete;
     }
 
-    editTask(taskname, taskcategory, dueDate, dueTime, priority) {
+    editTask(taskname, taskcategory, description, dueDate, dueTime, priority) {
         this.taskname = taskname;
         this.taskcategory = taskcategory;
+        this.description = description;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
         this.priority = priority;

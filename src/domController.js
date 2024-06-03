@@ -6,14 +6,14 @@ import dustbin from "../svg/trash-can-outline.svg";
 
 function domController() {
     const toDoList = new List();
-    initAddButton()
+    initAddButton();
 
     // initial render
-    displayTasks(toDoList)
+    displayTasks(toDoList);
 
-    initAddTaskForm(toDoList)
+    initAddTaskForm(toDoList);
 
-    initEditTaskForm(toDoList)
+    initEditTaskForm(toDoList);
 }
 
 function initAddTaskForm(toDoList) {
@@ -28,6 +28,7 @@ function initEditTaskForm(toDoList) {
         const task = toDoList.findTask(form.getAttribute("data"));
         task.editTask(form.tasknameEdit.value, 
             form.taskcategoryEdit.value, 
+            form.descriptionEdit.value,
             form.dueDateEdit.value, 
             form.dueTimeEdit.value, 
             form.priorityEdit.value);
@@ -44,6 +45,7 @@ function addTaskDom(toDoList) {
     const task = createNewTask(
         form.taskname.value, 
         form.taskcategory.value, 
+        form.description.value,
         form.dueDate.value, 
         form.dueTime.value, 
         form.priority.value, 
@@ -94,6 +96,8 @@ function createTaskDom(toDoList, task) {
     const checkbox = document.createElement("input");
     const taskContent = document.createElement("div");
     const taskName = document.createElement("p");
+    const caret = document.createElement("div");
+    const descriptionSpace = document.createElement("div");
     const details = document.createElement("div");
     const dueDate = document.createElement("span");
     const dustbinBtn = document.createElement("input");
@@ -107,11 +111,14 @@ function createTaskDom(toDoList, task) {
     checkbox.setAttribute("type", "checkbox");
     dustbinBtn.setAttribute("type", "image");
     pencilBtn.setAttribute("type", "image");
-    taskContent.classList.add("task-content")
-    details.classList.add("details")
+    taskContent.classList.add("task-content");
+    details.classList.add("details");
+    descriptionSpace.classList.add("description-space");
+    caret.classList.add("caret");
 
     priority.textContent = task.convertPriority(task.priority);
     taskName.textContent = task.taskname;
+    descriptionSpace.textContent = "Description: " + task.description;
     dueDate.textContent = "Due: " + task.dueDate + " " + task.dueTime;
     taskCategory.textContent = `${task.taskcategory} #`;
     
@@ -126,6 +133,8 @@ function createTaskDom(toDoList, task) {
     pencilBtn.classList.add("svg", "edit");
 
     details.appendChild(dueDate);
+    details.appendChild(caret);
+    details.appendChild(descriptionSpace);
 
     taskContent.appendChild(taskName);
     taskContent.appendChild(details);
@@ -140,6 +149,10 @@ function createTaskDom(toDoList, task) {
     tasks.appendChild(taskCategory);
 
     projectCards.appendChild(tasks);
+
+    caret.addEventListener("click", e => {
+        descriptionSpace.style.display = (descriptionSpace.style.display === "block") ? "none" : "block";
+    })
 
     // init delete buttons
     initDeleteButton(toDoList, task.index, dustbinBtn);

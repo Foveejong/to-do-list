@@ -115,7 +115,7 @@ button.sidebar-item {
     border-top: rgb(205, 205, 205) solid 1px;
     padding: 1.5rem 0;
     display: grid;
-    grid-template-columns: 1fr 6fr 3fr;
+    grid-template-columns: 1fr 5fr 3fr;
     align-items: center;
 }
 
@@ -138,12 +138,43 @@ input[type="checkbox"] {
 .task-content {
     display: flex;
     flex-direction: column;
-    min-width: 55ch;
+    width: clamp(30vw, 300px, 45vw);
 }
+
+.description-space {
+    display: none;
+    margin-top: 1rem;
+}
+
+.caret {
+    position: relative;
+}
+
+.caret::before {
+    cursor: pointer;
+    content: '';
+    position: absolute;
+    top: -20px;
+    left: 96%;
+    border-top: 7px solid #0a0707;
+    border-left: 7px solid transparent;
+    border-right: 7px solid transparent;
+  }
+  
+  .caret::after {
+    cursor: pointer;
+    content: '';
+    position: absolute;
+    left: calc(96% + 1px);
+    top: -20px;
+    border-top: 6px solid #fff;
+    border-left: 6px solid transparent;
+    border-right: 6px solid transparent;
+  }
 
 .dialog {
     position: absolute;
-    top: 25%;
+    top: 15%;
     left: 35%;
     min-height: 45vh;
     width: clamp(200px, 33vw, 500px);
@@ -157,12 +188,11 @@ input[type="checkbox"] {
     flex-direction: column;
     align-items: center;
     gap: 1rem;
-    padding: 2rem;
+    padding: 3rem 1rem;
 }
 
 .dialog::backdrop {
-    background-color: grey;
-    filter: blur(100rem);
+    backdrop-filter: blur(3px);
 }
 
 .input-container{
@@ -190,11 +220,16 @@ fieldset > .input-container {
     padding-left: 1rem;
 }
 
-input[type="text"], input[type="date"],input[type="time"] {
+input[type="text"], input[type="date"],input[type="time"], textarea {
     padding: 5px;
     border-radius: 5px;
     outline: none;
     border: solid black 1px;
+    width: 25ch;
+}
+
+textarea {
+    resize: none;
 }
 
 input:focus {
