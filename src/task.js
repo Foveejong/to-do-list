@@ -29,7 +29,7 @@ export class Task {
         }
     }
 
-    toggleComplete(bool) {
-        return (bool) ? false : true;
+    toggleComplete() {
+        return this.complete ? false : true;
     }
 }

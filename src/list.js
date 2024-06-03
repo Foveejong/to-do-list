@@ -20,6 +20,10 @@ class List {
         return taskArr[0]
     }
 
+    filterFinished = () => {
+        this.list.filter(task => task.complete);
+    }
+
     arrangePriority = () => {
         this.list.sort((a, b) => {
             return b.convertPriority(b.priority).length - a.convertPriority(a.priority).length

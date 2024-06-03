@@ -157,6 +157,7 @@ function createTaskDom(toDoList, task) {
     // init delete buttons
     initDeleteButton(toDoList, task.index, dustbinBtn);
     initEditButton(task.index, pencilBtn);
+    initCheckBox(toDoList, task.index, checkbox);
 }
 
 function initAddButton() {
@@ -185,6 +186,18 @@ function initEditButton(index, btn) {
         form.setAttribute("data", index);
         // show modal to input details 
         displayEditTaskModal();
+    })
+}
+
+function initCheckBox(toDoList, index, btn) {
+    btn.addEventListener("click", e => {
+        // DOM strike through
+        const closestTaskElement = e.target.closest(".tasks");
+        closestTaskElement.classList.toggle("finished");
+
+        // find task and update complete
+        const task = toDoList.findTask(index);
+        task.toggleComplete();
     })
 }
 
