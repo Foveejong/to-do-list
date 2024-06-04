@@ -31,11 +31,9 @@ function initEditTaskForm(toDoList) {
             form.dueDateEdit.value, 
             form.dueTimeEdit.value, 
             form.priorityEdit.value);
-            
+
         form.reset();
         resetTaskDisplay();
-
-
         displayTasks(toDoList);
     })
 }
@@ -50,8 +48,10 @@ function addTaskDom(toDoList) {
         form.dueDate.value, 
         form.dueTime.value, 
         form.priority.value, 
-        toDoList.list.length, 
-        false)
+        List.indexNumber++, 
+        false);
+
+    console.log(form.dueDate.value);
     
     //reset form 
     form.reset()
@@ -60,17 +60,15 @@ function addTaskDom(toDoList) {
     toDoList.addTask(task);
     
     resetTaskDisplay();
-        
-    //reset page first then display all
-    displayTasks(toDoList)
+    displayTasks(toDoList);
 }
 
 function displayTasks(toDoList) {
     // sort list first then display list
 
     toDoList.shiftFinished();
-    const active = toDoList.activeTasks();
-    toDoList.arrangeActiveTasks(active);
+    // const active = toDoList.activeTasks();
+    toDoList.arrangeActiveTasks();
 
     toDoList.list.forEach((task) => {
         createTaskDom(toDoList, task);
