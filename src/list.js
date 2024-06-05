@@ -1,6 +1,5 @@
 class List {
     // responsibilities related to list only
-    static indexNumber = 0;
     
     constructor() {
         this.list = [];
@@ -8,7 +7,6 @@ class List {
     
     addTask = (task) => {
         this.list.push(task);
-        console.log("Add")
     }
 
     deleteTask = (index) => {
@@ -16,15 +14,16 @@ class List {
     }
 
     findTask = (index) => {
-        const taskArr = this.list.filter((task) => +task.index === +index);
+        const taskArr = this.list.filter((task) => task.index === index);
         return taskArr[0]
     }
 
     shiftFinished = () => {
-        this.list.forEach((task, index) => {
+        // go to first finished item and delete finished items
+        this.list.forEach((task) => {
             if (task.complete) {
+                this.list.splice(this.list.indexOf(task), 1);
                 this.list.push(task);
-                this.list.splice(index, 1);
             }
         }) 
     }
@@ -35,18 +34,16 @@ class List {
 
     arrangeActiveTasks = () => {
         let active = this.activeTasks();
+        const sliced = this.list.slice(active.length, this.list.length)
+
+
         // sort active array
         active.sort((a, b) => {
             return b.convertPriority(b.priority).length - a.convertPriority(a.priority).length
         })  
 
-        console.log(active);
-        console.log(this.list.slice(active.length, this.list.length));
-
         // slice to find completed array and concat to active list
-        this.list = active.concat(
-            this.list.slice(active.length, this.list.length)
-        )
+        this.list = active.concat(sliced)
     }
 
     sortCategory = (category) => {

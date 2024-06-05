@@ -3,6 +3,7 @@ import { createNewTask } from "./logic";
 import pencil from "../svg/pencil.svg";
 import dustbin from "../svg/trash-can-outline.svg";
 
+
 function domController() {
     const toDoList = new List();
     initAddButton();
@@ -48,10 +49,8 @@ function addTaskDom(toDoList) {
         form.dueDate.value, 
         form.dueTime.value, 
         form.priority.value, 
-        List.indexNumber++, 
+        crypto.randomUUID(), 
         false);
-
-    console.log(form.dueDate.value);
     
     //reset form 
     form.reset()
@@ -65,7 +64,6 @@ function addTaskDom(toDoList) {
 
 function displayTasks(toDoList) {
     // sort list first then display list
-
     toDoList.shiftFinished();
     // const active = toDoList.activeTasks();
     toDoList.arrangeActiveTasks();
@@ -191,6 +189,7 @@ function initDeleteButton(toDoList, index, btn) {
 function initEditButton(index, btn) {
     const form = document.querySelector(".edit-task-form");
     btn.addEventListener("click", e => {
+        console.log(index);
         // change data attr of form to reflect task being changed
         form.setAttribute("data", index);
         // show modal to input details 
