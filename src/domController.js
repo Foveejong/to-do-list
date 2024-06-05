@@ -7,6 +7,7 @@ import dustbin from "../svg/trash-can-outline.svg";
 function domController() {
     const toDoList = new List();
     initAddButton();
+    initCategories("fitness", toDoList);
 
     // initial render
     displayTasks(toDoList);
@@ -65,7 +66,6 @@ function addTaskDom(toDoList) {
 function displayTasks(toDoList) {
     // sort list first then display list
     toDoList.shiftFinished();
-    // const active = toDoList.activeTasks();
     toDoList.arrangeActiveTasks();
 
     toDoList.list.forEach((task) => {
@@ -217,6 +217,34 @@ function initCheckBox(toDoList, index, btn) {
 
         displayTasks(toDoList);
     })
+}
+
+function initCategories(category, toDoList) {
+    const categories = document.querySelector(".categories")
+
+    // create button and append to the categories list
+    const button = document.createElement("button");
+    const span = document.createElement("span");
+    const p = document.createElement("p");
+
+    button.classList.add("categories-item");
+    button.classList.add("sidebar-item");
+    span.classList.add("list-marker");
+    p.classList.add("subheader");
+
+    span.textContent = "#";
+    p.textContent = `${category}`;
+
+    button.appendChild(span);
+    button.appendChild(p);
+
+    categories.appendChild(button)
+
+    // addeventlistener to sort categories
+    button.addEventListener("click", e => {
+        const sorted = toDoList.sortCategory(category);
+
+    });
 }
 
 export { domController }
