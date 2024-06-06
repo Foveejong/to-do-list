@@ -19,13 +19,17 @@ class List {
     }
 
     shiftFinished = () => {
+        const finished = [];
+        const active = [];
         // go to first finished item and delete finished items
         this.list.forEach((task) => {
             if (task.complete) {
-                this.list.splice(this.list.indexOf(task), 1);
-                this.list.push(task);
+                finished.push(task);
+            } else {
+                active.push(task)
             }
         }) 
+        this.list = active.concat(finished);
     }
 
     activeTasks = () => {

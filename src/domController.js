@@ -179,7 +179,6 @@ function initDeleteButton(toDoList, index, btn) {
         // update toDoList arr
         toDoList.deleteTask(index);
 
-        console.log(1);
         resetTaskDisplay();
 
         displayTasks(toDoList);
