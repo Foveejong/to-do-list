@@ -1,13 +1,14 @@
 export class Task {
-    constructor(taskname, taskcategory, description, dueDate, dueTime, priority, index, complete) {
+    constructor(taskname, taskcategory, description, dueDate, dueTime, priority, uuid, complete, display) {
         this.taskname = taskname;
         this.taskcategory = taskcategory;
         this.description = description;
         this.dueDate = dueDate;
         this.dueTime = dueTime;
         this.priority = priority;
-        this.index = index;
+        this.uuid = uuid;
         this.complete = complete;
+        this.display = display;
     }
 
     editTask(taskname, taskcategory, description, dueDate, dueTime, priority) {
@@ -34,5 +35,9 @@ export class Task {
 
         // disable the checkbox
         btn.disabled = true;
+    }
+
+    resetDisplay() {
+        this.display = true;
     }
 }

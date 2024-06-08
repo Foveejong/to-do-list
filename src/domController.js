@@ -1,5 +1,5 @@
 import { List } from "./List";
-import { createNewTask } from "./logic";
+import { createNewTask, resetDisplayProperties } from "./logic";
 import pencil from "../svg/pencil.svg";
 import dustbin from "../svg/trash-can-outline.svg";
 
@@ -7,7 +7,8 @@ import dustbin from "../svg/trash-can-outline.svg";
 function domController() {
     const toDoList = new List();
     initAddButton();
-    initCategories("fitness", toDoList);
+    initAllTasksButton(toDoList);
+    initCategories("hey", toDoList);
 
     // initial render
     displayTasks(toDoList);
@@ -27,13 +28,31 @@ function initEditTaskForm(toDoList) {
     form.addEventListener("submit", e => {
         // get data attr of form, which reflects item being changed
         const task = toDoList.findTask(form.getAttribute("data"));
+        const oldCategory = task.taskcategory;
+
+        
         task.editTask(form.tasknameEdit.value, 
             form.taskcategoryEdit.value, 
             form.descriptionEdit.value,
             form.dueDateEdit.value, 
             form.dueTimeEdit.value, 
             form.priorityEdit.value);
+            
+        // if old list does not include new category, include it
+        if (!toDoList.categoryList.includes(form.taskcategoryEdit.value)) {
+            toDoList.addCategory(form.taskcategoryEdit.value);
+            initCategories(form.taskcategoryEdit.value, toDoList);
+        }
 
+        // if category changed, remove it
+        toDoList.getRemainingCategories();
+        console.log(toDoList.categoryList);
+        if (!toDoList.categoryList.includes(oldCategory)) {
+            const element = document.querySelector("." + `${oldCategory}`);
+            console.log(element);
+            element.remove();
+        }
+            
         form.reset();
         resetTaskDisplay();
         displayTasks(toDoList);
@@ -51,7 +70,14 @@ function addTaskDom(toDoList) {
         form.dueTime.value, 
         form.priority.value, 
         crypto.randomUUID(), 
-        false);
+        false,
+        true);
+
+    // check if categories in sections, if not in, add and display
+    if (!toDoList.categoryList.includes(form.taskcategory.value)) {
+        toDoList.addCategory(form.taskcategory.value);
+        initCategories(form.taskcategory.value, toDoList);
+    }
     
     //reset form 
     form.reset()
@@ -106,7 +132,7 @@ function createTaskDom(toDoList, task) {
     const taskCategory = document.createElement("p");
 
     tasks.classList.add("tasks");
-    tasks.setAttribute("data", task.index);
+    tasks.setAttribute("data", task.uuid);
     priority.classList.add("priority", `${task.priority}`);
     taskbox.classList.add("task");
     checkbox.setAttribute("type", "checkbox");
@@ -129,6 +155,10 @@ function createTaskDom(toDoList, task) {
         checkbox.checked = true;
         checkbox.disabled = true;
         pencilBtn.disabled = true;
+    }
+
+    if (!task.display) {
+        tasks.style.display = "none";
     }
     
     dustbinBtn.src = dustbin;
@@ -160,10 +190,21 @@ function createTaskDom(toDoList, task) {
     projectCards.appendChild(tasks);
 
     // init buttons
-    initDeleteButton(toDoList, task.index, dustbinBtn);
-    initEditButton(task.index, pencilBtn);
+    initDeleteButton(toDoList, task.uuid, task, dustbinBtn);
+    initEditButton(task.uuid, pencilBtn);
     initCaret(caret, descriptionSpace);
-    initCheckBox(toDoList, task.index, checkbox);
+    initCheckBox(toDoList, task.uuid, checkbox);
+}
+
+function initAllTasksButton(toDoList) {
+    const btn = document.querySelector("#all-tasks");
+    btn.addEventListener("click", e => {
+        resetDisplayProperties(toDoList);
+
+        console.log(toDoList.list);
+        resetTaskDisplay();
+        displayTasks(toDoList);
+    });
 }
 
 function initAddButton() {
@@ -171,13 +212,20 @@ function initAddButton() {
     btn.addEventListener("click", displayAddTaskModal);
 }
 
-function initDeleteButton(toDoList, index, btn) {
+function initDeleteButton(toDoList, uuid, task, btn) {
     btn.addEventListener("click", e => {
         // delete element
         e.target.closest(".tasks").remove();
         
         // update toDoList arr
-        toDoList.deleteTask(index);
+        toDoList.deleteTask(uuid);
+
+        // get the remaining categories
+        toDoList.getRemainingCategories()
+        if (!toDoList.categoryList.includes(task.taskcategory)) {
+            const element = document.querySelector("." + `${task.taskcategory}`)
+            element.remove();
+        }
 
         resetTaskDisplay();
 
@@ -185,13 +233,12 @@ function initDeleteButton(toDoList, index, btn) {
     })
 }
 
-function initEditButton(index, btn) {
+function initEditButton(uuid, btn) {
     const form = document.querySelector(".edit-task-form");
     btn.addEventListener("click", e => {
-        console.log(index);
         // change data attr of form to reflect task being changed
-        form.setAttribute("data", index);
-        // show modal to input details 
+        form.setAttribute("data", uuid);
+        // show modal to input details
         displayEditTaskModal();
     })
 }
@@ -202,14 +249,14 @@ function initCaret(caret, description) {
     })
 }
 
-function initCheckBox(toDoList, index, btn) {
+function initCheckBox(toDoList, uuid, btn) {
     btn.addEventListener("click", e => {
         // DOM strike through
         const closestTaskElement = e.target.closest(".tasks");
         closestTaskElement.classList.add("finished");
 
         // find task and update complete
-        const task = toDoList.findTask(index);
+        const task = toDoList.findTask(uuid);
         task.completeTask(btn);
 
         resetTaskDisplay();
@@ -228,6 +275,7 @@ function initCategories(category, toDoList) {
 
     button.classList.add("categories-item");
     button.classList.add("sidebar-item");
+    button.classList.add(`${category}`);
     span.classList.add("list-marker");
     p.classList.add("subheader");
 
@@ -241,8 +289,9 @@ function initCategories(category, toDoList) {
 
     // addeventlistener to sort categories
     button.addEventListener("click", e => {
-        const sorted = toDoList.sortCategory(category);
-
+        toDoList.sortCategory(category);
+        resetTaskDisplay();
+        displayTasks(toDoList);
     });
 }
 

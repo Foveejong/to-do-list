@@ -1,7 +1,13 @@
 import { Task } from "./Task";
 
-function createNewTask(name, category, description, date, time, priority, index, completed) {
-    return new Task(name, category, description, date, time, priority, index, completed)
+function createNewTask(name, category, description, date, time, priority, uuid, completed, display) {
+    return new Task(name, category, description, date, time, priority, uuid, completed, display)
 }
 
-export { createNewTask }
+function resetDisplayProperties(toDoList) {
+    toDoList.list.forEach(task => {
+        task.resetDisplay()
+    });
+}
+
+export { createNewTask, resetDisplayProperties }

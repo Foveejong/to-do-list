@@ -3,18 +3,19 @@ class List {
     
     constructor() {
         this.list = [];
+        this.categoryList = []
     }
     
     addTask = (task) => {
         this.list.push(task);
     }
 
-    deleteTask = (index) => {
-        this.list = this.list.filter(task => task.index !== index)
+    deleteTask = (uuid) => {
+        this.list = this.list.filter(task => task.uuid !== uuid)
     }
 
-    findTask = (index) => {
-        const taskArr = this.list.filter((task) => task.index === index);
+    findTask = (uuid) => {
+        const taskArr = this.list.filter((task) => task.uuid === uuid);
         return taskArr[0]
     }
 
@@ -50,12 +51,33 @@ class List {
         this.list = active.concat(sliced)
     }
 
+    // check if tasks are part of clicked category
     sortCategory = (category) => {
-        return this.list.filter(task => task.taskcategory === category)
+        const categorised = [];
+        const notCategorised = [];
+        this.list.forEach((task) => {
+            if (task.taskcategory.toLowerCase() === category.toLowerCase()) {
+                task.display = true;
+                categorised.push(task);
+            } else {
+                task.display = false;
+                notCategorised.push(task);
+            }
+        }) 
+        this.list = categorised.concat(notCategorised)
+        console.log(this.list);
     }
 
-    sortDueDate = (dueDate) => {
+    getRemainingCategories = () => {
+        const remaining = [];
+        this.list.forEach((task) => {
+            if (!remaining.includes(task.taskcategory)) remaining.push(task.taskcategory);
+        })
+        this.categoryList = remaining;
+    }
 
+    addCategory = (category) => {
+        this.categoryList.push(category);
     }
 }
 
