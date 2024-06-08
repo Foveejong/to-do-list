@@ -79,6 +79,24 @@ class List {
     addCategory = (category) => {
         this.categoryList.push(category);
     }
+
+    sortToday = () => {
+        const currentDate = new Date()
+        const todayArr = [];
+        const notTodayArr = [];
+        this.list.forEach((task) => {
+            // set hours to the same so that solely date is compared
+            const date = new Date(task.dueDate);
+            if (date.setHours(0, 0, 0, 0) === currentDate.setHours(0, 0, 0, 0)) {
+                task.display = true;
+                todayArr.push(task);
+            } else {
+                task.display = false;
+                notTodayArr.push(task);
+            }
+        }) 
+        this.list = todayArr.concat(notTodayArr);
+    }
 }
 
 export { List }

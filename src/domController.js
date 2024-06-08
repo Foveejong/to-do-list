@@ -8,6 +8,7 @@ function domController() {
     const toDoList = new List();
     initAddButton();
     initAllTasksButton(toDoList);
+    initToday(toDoList);
 
     // initial render
     displayTasks(toDoList);
@@ -267,6 +268,7 @@ function initCheckBox(toDoList, uuid, btn) {
 
 function initCategories(category, toDoList) {
     const categories = document.querySelector(".categories");
+    const title = document.querySelector(".subtitle");
 
     // create button and append to the categories list
     const button = document.createElement("button");
@@ -290,12 +292,22 @@ function initCategories(category, toDoList) {
     // addeventlistener to sort categories
     button.addEventListener("click", e => {
         toDoList.sortCategory(category);
-        const title = document.querySelector(".subtitle");
         title.textContent = category;
 
         resetTaskDisplay();
         displayTasks(toDoList);
     });
+}
+
+function initToday(toDoList) {
+    const todayBtn = document.querySelector("#today");
+    const title = document.querySelector(".subtitle");
+    todayBtn.addEventListener("click", (e) => {
+        toDoList.sortToday();
+        title.textContent = "Today";
+        resetTaskDisplay();
+        displayTasks(toDoList);
+    })
 }
 
 export { domController }
