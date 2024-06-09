@@ -10,7 +10,7 @@ module.exports = {
     },
     output: {
         // remember to change back to bundle.js or main.js
-        filename: "[name].js",
+        filename: "main.js",
         path: path.resolve(__dirname, "./dist"),
         clean: true,
     },
@@ -36,10 +36,10 @@ module.exports = {
             {
                 test: /\.(woff|woff2|eot|ttf|otf)$/i,
                 type: 'asset/resource'
-            }
+            },
         ]
     },
-    optimization: {
-        runtimeChunk: "single",
-    },
+    // optimization: {
+    //     runtimeChunk: "single",
+    // },
 }

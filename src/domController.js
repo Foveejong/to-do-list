@@ -3,6 +3,7 @@ import { Storage } from "./Storage";
 import { createNewTask, resetDisplayProperties } from "./logic";
 import pencil from "../svg/pencil.svg";
 import dustbin from "../svg/trash-can-outline.svg";
+import sign from "../svg/format-list-text.svg";
 
 
 function domController() {
@@ -15,6 +16,8 @@ function domController() {
         Storage.updateTaskList("todolist", JSON.stringify(toDoList));
     }
 
+
+    initPermanentButtons();
     initAddButton();
     initAllTasksButton(toDoList);
     initToday(toDoList);
@@ -209,6 +212,14 @@ function createTaskDom(toDoList, task) {
     initEditButton(task.uuid, pencilBtn);
     initCaret(caret, descriptionSpace);
     initCheckBox(toDoList, task.uuid, checkbox);
+}
+
+function initPermanentButtons() {
+    const alltasks = document.querySelector(".all-tasks-img");
+    const today = document.querySelector(".today-img");
+
+    alltasks.src = sign;
+    today.src = sign;
 }
 
 function initAllTasksButton(toDoList) {
