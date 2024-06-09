@@ -286,6 +286,9 @@ function initCheckBox(toDoList, uuid, btn) {
         const task = toDoList.findTask(uuid);
         task.completeTask(btn);
 
+        // update Storage
+        Storage.updateTaskList(toDoList);
+
         resetAllDisplay();
 
         displayAll(toDoList);
