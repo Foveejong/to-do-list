@@ -29,8 +29,6 @@ class Storage {
     }
   }
 
-  // JSON.parse(todolist) gives object, JSON.stringify(todolist) gives string
-
   static getTaskList() {
     const todolist = Object.assign(new List(), JSON.parse(localStorage.getItem("todolist")));
 
