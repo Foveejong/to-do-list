@@ -1,17 +1,26 @@
 import { List } from "./List";
+import { Storage } from "./Storage";
 import { createNewTask, resetDisplayProperties } from "./logic";
 import pencil from "../svg/pencil.svg";
 import dustbin from "../svg/trash-can-outline.svg";
 
 
 function domController() {
-    const toDoList = new List();
+    let toDoList;
+    if (Storage.storageAvailable("localStorage") && localStorage.getItem("todolist")) {
+        // overwrite List's tasklist and categorylist
+        toDoList = Storage.getTaskList();
+    } else {
+        toDoList = new List();
+        Storage.updateTaskList("todolist", JSON.stringify(toDoList));
+    }
+
     initAddButton();
     initAllTasksButton(toDoList);
     initToday(toDoList);
 
     // initial render
-    displayTasks(toDoList);
+    displayAll(toDoList);
 
     initAddTaskForm(toDoList);
 
@@ -29,7 +38,6 @@ function initEditTaskForm(toDoList) {
         // get data attr of form, which reflects item being changed
         const task = toDoList.findTask(form.getAttribute("data"));
         const oldCategory = task.taskcategory;
-
         
         task.editTask(form.tasknameEdit.value, 
             form.taskcategoryEdit.value, 
@@ -37,7 +45,7 @@ function initEditTaskForm(toDoList) {
             form.dueDateEdit.value, 
             form.dueTimeEdit.value, 
             form.priorityEdit.value);
-            
+
         // if old list does not include new category, include it
         if (!toDoList.categoryList.includes(form.taskcategoryEdit.value)) {
             toDoList.addCategory(form.taskcategoryEdit.value);
@@ -46,16 +54,14 @@ function initEditTaskForm(toDoList) {
 
         // if category changed, remove it
         toDoList.getRemainingCategories();
-        console.log(toDoList.categoryList);
-        if (!toDoList.categoryList.includes(oldCategory)) {
-            const element = document.querySelector("." + `${oldCategory}`);
-            console.log(element);
-            element.remove();
-        }
+        toDoList.removeEmptyCategory(oldCategory)
+
+        // update Storage
+        Storage.updateTaskList(toDoList);
             
         form.reset();
-        resetTaskDisplay();
-        displayTasks(toDoList);
+        resetAllDisplay();
+        displayAll(toDoList);
     })
 }
 
@@ -84,18 +90,25 @@ function addTaskDom(toDoList) {
 
     // append task to list
     toDoList.addTask(task);
+
+    // update Storage
+    Storage.updateTaskList(toDoList);
     
-    resetTaskDisplay();
-    displayTasks(toDoList);
+    resetAllDisplay();
+    displayAll(toDoList);
 }
 
-function displayTasks(toDoList) {
+function displayAll(toDoList) {
     // sort list first then display list
     toDoList.shiftFinished();
     toDoList.arrangeActiveTasks();
 
     toDoList.list.forEach((task) => {
         createTaskDom(toDoList, task);
+    });
+
+    toDoList.categoryList.forEach((category) => {
+        initCategories(category, toDoList);
     });
 }
 
@@ -109,9 +122,11 @@ function displayEditTaskModal() {
     dialog.showModal();
 }
 
-function resetTaskDisplay() {
+function resetAllDisplay() {
     const projectCards = document.querySelector(".project-cards");
+    const categoryBtns = document.querySelector(".categories");
     projectCards.textContent = "";
+    categoryBtns.textContent = "";
 }
  
 function createTaskDom(toDoList, task) {
@@ -203,8 +218,8 @@ function initAllTasksButton(toDoList) {
         resetDisplayProperties(toDoList);
         title.textContent = "All Tasks";
 
-        resetTaskDisplay();
-        displayTasks(toDoList);
+        resetAllDisplay();
+        displayAll(toDoList);
     });
 }
 
@@ -223,14 +238,14 @@ function initDeleteButton(toDoList, uuid, task, btn) {
 
         // get the remaining categories
         toDoList.getRemainingCategories()
-        if (!toDoList.categoryList.includes(task.taskcategory)) {
-            const element = document.querySelector("." + `${task.taskcategory}`)
-            element.remove();
-        }
+        toDoList.removeEmptyCategory(task.taskcategory)
 
-        resetTaskDisplay();
+        // update Storage
+        Storage.updateTaskList(toDoList);
 
-        displayTasks(toDoList);
+        resetAllDisplay();
+
+        displayAll(toDoList);
     })
 }
 
@@ -260,9 +275,9 @@ function initCheckBox(toDoList, uuid, btn) {
         const task = toDoList.findTask(uuid);
         task.completeTask(btn);
 
-        resetTaskDisplay();
+        resetAllDisplay();
 
-        displayTasks(toDoList);
+        displayAll(toDoList);
     })
 }
 
@@ -277,12 +292,12 @@ function initCategories(category, toDoList) {
 
     button.classList.add("categories-item");
     button.classList.add("sidebar-item");
-    button.classList.add(`${category}`);
+    button.classList.add(category);
     span.classList.add("list-marker");
     p.classList.add("subheader");
 
     span.textContent = "#";
-    p.textContent = `${category}`;
+    p.textContent = category;
 
     button.appendChild(span);
     button.appendChild(p);
@@ -294,8 +309,8 @@ function initCategories(category, toDoList) {
         toDoList.sortCategory(category);
         title.textContent = category;
 
-        resetTaskDisplay();
-        displayTasks(toDoList);
+        resetAllDisplay();
+        displayAll(toDoList);
     });
 }
 
@@ -305,8 +320,8 @@ function initToday(toDoList) {
     todayBtn.addEventListener("click", (e) => {
         toDoList.sortToday();
         title.textContent = "Today";
-        resetTaskDisplay();
-        displayTasks(toDoList);
+        resetAllDisplay();
+        displayAll(toDoList);
     })
 }
 

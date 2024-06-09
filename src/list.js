@@ -65,7 +65,6 @@ class List {
             }
         }) 
         this.list = categorised.concat(notCategorised)
-        console.log(this.list);
     }
 
     getRemainingCategories = () => {
@@ -96,6 +95,13 @@ class List {
             }
         }) 
         this.list = todayArr.concat(notTodayArr);
+    }
+
+    removeEmptyCategory = (category) => {
+        if (!this.categoryList.includes(category)) {
+            const element = document.querySelector("." + `${category}`)
+            element.remove();
+        }
     }
 }
 
