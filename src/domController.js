@@ -32,12 +32,12 @@ function domController() {
 
 function initAddTaskForm(toDoList) {
     const form = document.querySelector(".add-task-form");
-    form.addEventListener("submit", e => addTaskDom(toDoList))
+    form.addEventListener("submit", () => addTaskDom(toDoList))
 }
 
 function initEditTaskForm(toDoList) {
     const form = document.querySelector(".edit-task-form");
-    form.addEventListener("submit", e => {
+    form.addEventListener("submit", () => {
         // get data attr of form, which reflects item being changed
         const task = toDoList.findTask(form.getAttribute("data"));
         const oldCategory = task.taskcategory;
